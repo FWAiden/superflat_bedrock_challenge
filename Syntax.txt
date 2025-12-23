@@ -1,0 +1,21 @@
+summon minecraft:[entity]: summons an entity
+
+~ ~ ~ : coordinates relative to where the command was executed
+
+Tags:["[name]"]: tags allow to find specific instances of entities or things
+
+scoreboard players set ... 0: Sets scoreboard value to 0
+
+@e[...]: target selector (selects what or who is doing something or who/what is affected by something)
+
+limit=1: limits the number of entities/selected targets to 1
+
+sort=nearest: (relative to the tag) looks for the thing (of a tag) that is closest
+
+execute as @e[...]: an entity is executing a command
+
+run function [namespace]:[function]
+
+@s: selects the one executing the command (e.g. an entity)
+
+Offers:{Recipes:[ ... ]} : offers of a merchant with recipes

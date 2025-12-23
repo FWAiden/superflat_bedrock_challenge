@@ -1,0 +1,3 @@
+data merge entity @s {Offers:{Recipes:[{buy:{id:"minecraft:emerald",count:1},sell:{id:"minecraft:bread",count:8}},                      {buy:{id:"minecraft:emerald",count:5}, sell:{ id:"minecraft:warped_fungus_on_a_stick", count:1, components:{"minecraft:custom_name":'{"Time Token"}', "minecraft:enchantment_glint_override":true}}, maxUses:9999999},                {buy:{id:"minecraft:slime_block",count:64},sell:{id:"minecraft:dirt",count:2}},                                                         {buy:{id:"minecraft:emerald",count:10b}, sell:{id:"minecraft:paper",count:1b,components:{"minecraft:custom_name":'{"Handelslizenz"}',"minecraft:enchantment_glint_override":true}}, maxUses:1}]}}
+
+

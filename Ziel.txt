@@ -1,0 +1,13 @@
+1. Geister tauchen anfangs auf und helfen dabei mit ein paar Items dem Spieler das Leben einfacher zu machen
+--> Bett, Holz, Timeskip für die Nacht
+--> Anfangs geben die Geister nur gegen Schleim Items
+
+2. Je weiter der Spieler kommt, desto mehr können die Geister helfen. 
+--> Zweite Stufe: Eisen, Erde, Werkzeuge
+
+3. Anfangs muss der Spieler folgendes tun, um an Ressourcen zu kommen:
+--> Glück, dass Zombies Kartoffeln droppen und Eisen
+--> Knochenmehl von Skeletten
+--> Flaschen von Hexen
+--> Schleim von Slimes
+Dann muss man alles aus Schleim bauen und einen cualdron bauen aus Eisen und mit Eisen einen Eimer bauen, um endlos Wasser zu erhalten

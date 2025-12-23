@@ -1,0 +1,18 @@
+DeathLootTable:"merchant:trader_loot": Anstatt des Standard Loots wird eine benutzerdefinierte Tabelle in "data/merchant/loot_tables/trader_loot.json" genutzt
+
+# Erzeugt einen geister Partikeleffekt um eine Entität (hier wandering_trader mit tag challenge_trader)
+# execute at @e[...] run particle <WAS> <WO> <VERTEILUNG> <TEMPO> <MENGE>
+# <WO> = ~ : an derselben Stelle, an der der Befehl ausgeführt wird
+# ~ ~0.8 ~: x = genau auf der Position, y = 0.8 Blöcke oben, z = genau auf der Position
+# 0.2 0.4 0.2: x = Partikel weichen 0.2 Blöcke nach links oder rechts ab, y = 0.4 Blöcke nach oben/unten, z = nach vorne/hinten
+# 0.05: Geschwindigkeit (0 langsam, 1 schnell)
+# 2: Partikel pro Ausführung (pro Tick, bei 20 Ticks pro Sekunde = 40 Partikel pro Sekunde)
+execute at @e[type=minecraft:wandering_trader,tag=challenge_trader] run particle minecraft:sculk_soul ~ ~0.8 ~ 0.2 0.4 0.2 0.05 2
+
+execute store result score #current_time merchant_lifetime run time query daytime
+--> execute: leitet ausführung eine
+--> store result score: Speicherbefehl um Ergebnis Score im Scoreboard zu speichern
+--> #current_time: Name des Besitzers des Scores
+--> merchant_lifetime_ Objective (das Scoreboard/Tabelle) in das geschrieben wird
+--> run: Trennwort, danach ist alles Ausführung
+--> time query daytime: gibt aktuelle Uhrzeit in Ticks (0-24000) zurück
