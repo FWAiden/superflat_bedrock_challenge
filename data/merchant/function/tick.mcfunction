@@ -72,6 +72,6 @@ execute at @e[type=minecraft:wandering_trader,tag=challenge_trader] run particle
 
 # 2. SCHNEE-SPUR (Optional)
 # Setzt eine Schneeschicht an der Position des Händlers, aber nur, wenn dort Luft ist ("keep")
-# execute at @e[type=minecraft:wandering_trader,tag=challenge_trader] run setblock ~ ~ ~ minecraft:snow[layers=1] keep
+execute at @e[type=minecraft:wandering_trader,tag=challenge_trader] run setblock ~ ~ ~ minecraft:snow[layers=1] keep
 
 
