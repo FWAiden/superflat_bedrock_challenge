@@ -5,10 +5,14 @@ execute as @e[type=minecraft:wandering_trader,tag=challenge_trader] run particle
 execute as @e[type=minecraft:wandering_trader,tag=challenge_trader] run kill @s
 
 
-# --- 2. BESCHWÖREN (Der Fels in der Brandung) ---
+# --- 2. BESCHWÖREN ---
 # Wir setzen Attribute UND geben ihm tags direkt mit.
 # WICHTIG: Invulnerable:1b verhindert Schaden und Knockback durch Spieler-Schläge komplett.
 summon minecraft:wandering_trader ~ ~ ~ {Tags:["challenge_trader","is_new"], DeathLootTable:"merchant:trader_loot", DespawnDelay:2147483647, Invulnerable:1b, Attributes:[{Name:"minecraft:movement_speed",Base:0.0}, {Name:"minecraft:knockback_resistance",Base:1.0}]}
+
+# Verteilt den NEUEN Händler ("is_new") in einem 10-Block-Radius.
+# WICHTIG: Ersetze '0 0' durch die X und Z Koordinaten des Raumes wo der Händler spawnen soll!
+spreadplayers 0 0 1 10 false @e[type=minecraft:wandering_trader,tag=is_new]
 
 
 # --- 3. SICHERHEIT: BEWEGUNG EINFRIEREN ---

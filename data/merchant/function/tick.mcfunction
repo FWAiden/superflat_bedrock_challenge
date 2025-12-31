@@ -14,7 +14,7 @@ execute unless score #level merchant_data matches 1.. run scoreboard players set
 # --- HANDEL LEVEL-UP ERKENNUNG ---
 # Prüft, ob ein Spieler die "Handelslizenz" im Inventar hat und startet das Upgrade.
 # (Achte darauf, dass der Name exakt mit dem in deinem Trade übereinstimmt!)
-execute as @a[nbt={Inventory:[{id:"minecraft:paper",components:{"minecraft:custom_name":'{"Handelslizenz"}'}}]}] run function merchant:merchant_levelup
+execute as @a[nbt={Inventory:[{id:"minecraft:paper",components:{"minecraft:custom_name":'{"text":"Handelslizenz"}'}}]}] run function merchant:merchant_levelup
 
 # Wenn 10 Minuten (12000 Ticks) um sind:
 # 1. Setze Timer zurück auf 0
@@ -35,13 +35,30 @@ execute if score #pending merchant_spawn_timer matches 1 if score #current_time 
 
 # A) ERFOLG: Spieler klickt + hat Item + es ist NACHT (13000 bis 23999)
 # Wir prüfen: Score > 0, Item in Hand, Zeit ist Nacht.
-execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"Time Token"}'}}}] at @s if score #current_time merchant_lifetime matches 13000.. run function merchant:start_timeskip
+execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"text":"Time Token"}'}}}] at @s if score #current_time merchant_lifetime matches 13000.. run function merchant:start_timeskip
+
+# 2 Lösche das Item direkt aus der Hand 
+execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"text":"Time Token"}'}}}] at @s if score #current_time merchant_lifetime matches 13000.. run item replace entity @s weapon.mainhand with air
 
 # B) FEHLER: Spieler klickt + hat Item + es ist TAG (0 bis 12999)
 # Optional: Gib dem Spieler Feedback, dass es nur nachts geht. (Das Item wird NICHT gelöscht, da start_timeskip nicht läuft)
-execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"Time Token"}'}}}] at @s unless score #current_time merchant_lifetime matches 13000.. run title @s actionbar {"text":"Der Token funktioniert nur nachts!","color":"red"}
+execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"text":"Time Token"}'}}}] at @s unless score #current_time merchant_lifetime matches 13000.. run title @s actionbar {"text":"Der Token funktioniert nur nachts!","color":"red"}
 
-# C) RESET: Klick-Score immer zurücksetzen
+# --- REGEN ITEM (RECHTSKLICK LOGIK) ---
+
+# 1. AUSFÜHREN: Setzt Regen für 100000 Ticks (Rains keeps stopping and it's pissing me)
+execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"text":"Regen-Totem"}'}}}] at @s run weather rain 12000
+
+# Optional: Sound abspielen (Donner)
+execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"text":"Regen-Totem"}'}}}] at @s run playsound minecraft:entity.lightning_bolt.thunder master @a ~ ~ ~ 1 1
+
+# Optional: Nachricht
+execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"text":"Regen-Totem"}'}}}] at @s run title @a actionbar {"text":"Die Geister weinen...","color":"blue"}
+
+# 2. LÖSCHEN: Item aus der Hand entfernen
+execute as @a[scores={click_token=1..},nbt={SelectedItem:{id:"minecraft:warped_fungus_on_a_stick",components:{"minecraft:custom_name":'{"text":"Regen-Totem"}'}}}] at @s run item replace entity @s weapon.mainhand with air
+
+# RESET: Klick-Score immer zurücksetzen nach allen Klick Aktionen
 scoreboard players set @a[scores={click_token=1..}] click_token 0
 
 # --- TIMESKIP AUSFÜHREN ---

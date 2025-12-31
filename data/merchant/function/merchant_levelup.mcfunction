@@ -1,5 +1,5 @@
 # 1. Das Item entfernen (WICHTIG! Sonst loopt es unendlich)
-clear @s minecraft:paper[minecraft:custom_name='{"Handelslizenz"}'] 1
+clear @s minecraft:paper[minecraft:custom_name='{"text":"Handelslizenz"}'] 1
 
 # 2. Das globale Level erhöhen
 scoreboard players add #level merchant_data 1

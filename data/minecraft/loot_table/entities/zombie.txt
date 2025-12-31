@@ -1,0 +1,120 @@
+{
+  // Definiert, wofür dieser Loot Table ist. "entity" bedeutet, es ist für ein Lebewesen (Mob).
+  // Wäre es für einen Block, müsste hier "minecraft:block" stehen.
+  "type": "minecraft:entity",
+
+  // "pools" sind die verschiedenen "Lostöpfe".
+  // Minecraft geht jeden Pool nacheinander durch und würfelt unabhängig voneinander.
+  "pools": [
+
+    // --- POOL 1: VERROTTETES FLEISCH ---
+    // Dieser Pool läuft immer, wenn der Zombie stirbt.
+    {
+      "rolls": 1, // Wie oft wird in diesem Pool gewürfelt? Hier: 1 Mal.
+      "entries": [
+        {
+          "type": "minecraft:item", // Es soll ein Item droppen.
+          "name": "minecraft:rotten_flesh", // Welches Item? Verrottetes Fleisch.
+          "functions": [
+            // Funktion 1: Die Grundmenge festlegen (ohne Verzauberung).
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform", // "Uniform" heißt: Jede Zahl ist gleich wahrscheinlich.
+                "min": 0, // Mindestens 0 Stück.
+                "max": 2  // Höchstens 2 Stück.
+              }
+            },
+            // Funktion 2: Was passiert bei "Plünderung" (Looting) auf dem Schwert?
+            // (Das ist die NEUE Schreibweise für 1.21!)
+            {
+              "function": "minecraft:enchanted_count_increase",
+              "enchantment": "minecraft:looting", // Wir prüfen auf die Verzauberung "Plünderung".
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 0, // Pro Looting-Level gibt es min. 0 extra...
+                "max": 1  // ...und max. 1 extra Fleisch.
+              },
+              "limit": 3 // Obergrenze: Egal wie hoch das Looting-Level ist, max. 3 Items extra.
+            }
+          ]
+        }
+      ]
+    },
+
+    // --- POOL 2: EISEN (Dein wichtigster Teil) ---
+    {
+      "rolls": 1, // Ein Versuch zu würfeln.
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:iron_ingot", // Das Ziel-Item: Eisenbarren.
+          "functions": [
+            // Grundmenge ist immer exakt 1, wenn der Drop gelingt.
+            {
+              "function": "minecraft:set_count",
+              "count": 1
+            },
+            // Looting-Bonus für Eisen
+            {
+              "function": "minecraft:enchanted_count_increase",
+              "enchantment": "minecraft:looting",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 0,
+                "max": 1 // Bei Looting 3 kannst du also bis zu 3 extra Eisen bekommen.
+              },
+              "limit": 10 // Technische Obergrenze (wird hier kaum erreicht, ist aber sicher).
+            }
+          ],
+          // "Conditions" sind Bedingungen. Wenn diese NICHT erfüllt sind, passiert in diesem Pool GAR NICHTS.
+          "conditions": [
+            // Bedingung A: Der Zombie muss von einem Spieler (oder gezähmten Wolf) getötet werden.
+            // Stirbt er durch Sonnenlicht oder Fallschaden, gibt es KEIN Eisen.
+            {
+              "condition": "minecraft:killed_by_player"
+            },
+            // Bedingung B: Die Wahrscheinlichkeit.
+            // 0.1 entspricht 10% Chance.
+            // WICHTIG: In 1.21 ist das eine feste Chance. Früher stieg die Chance mit Looting automatisch,
+            // jetzt regeln wir den Bonus oben über "enchanted_count_increase".
+            {
+              "condition": "minecraft:random_chance",
+              "chance": 0.1
+            }
+          ]
+        }
+      ]
+    },
+
+    // --- POOL 3: SELTENES GEMÜSE (Karotten & Kartoffeln) ---
+    {
+      "rolls": 1,
+      "entries": [
+        // Hier haben wir ZWEI Einträge in einem Pool.
+        // Das Spiel entscheidet sich für EINEN von beiden basierend auf dem "weight" (Gewicht).
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:carrot",
+          "weight": 1 // Gewichtung 1
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:potato",
+          "weight": 1 // Gewichtung 1
+          // Da beide Weight 1 haben, ist die Chance 50/50 zwischen Karotte und Kartoffel,
+          // ABER NUR WENN der Pool überhaupt aktiviert wird (siehe conditions unten).
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player" // Nur bei Spielerkill.
+        },
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.05 // Nur 5% Wahrscheinlichkeit, dass dieser Pool überhaupt etwas droppt.
+        }
+      ]
+    }
+  ]
+}
